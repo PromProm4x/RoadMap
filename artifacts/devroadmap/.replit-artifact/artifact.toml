@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "DevRoadmap"
+description = "An interactive web-development learning platform that guides beginners through a complete curriculum with lessons, practice, projects, resource discovery, and persistent progress."
+version = "1.0.0"
+id = "artifacts/devroadmap"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22146
+
+[services.development]
+run = "pnpm --filter @workspace/devroadmap run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/devroadmap", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/devroadmap/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22146"
+BASE_PATH = "/"
